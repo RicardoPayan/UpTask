@@ -1,0 +1,25 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.formulario{
+
+  margin-top: 5rem;
+
+  .campo{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    label{
+      flex: 0 0 10rem; /*Factor de crecimiento, hacer que los campos se queden de un tamano*/
+    }
+
+    input{
+      flex: 1; /*Que los campos tomen todo el tamano que puedan*/
+      padding: 1rem;
+      border: none;
+      background-color: lighten(v.$gris,40%);
+    }
+  }
+
+}
