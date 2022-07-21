@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use MVC\models\Usuario;
 use MVC\Router;
 
 class LoginController{
@@ -23,37 +24,55 @@ class LoginController{
 
     public static function crear(Router $router){
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $usuario = new Usuario();
 
+        $errores = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $usuario->sincronizar($_POST);
+
+            $alertas = $usuario->validarNuevaCuenta();
+            debuguear($alertas);
         }
 
         //Render a la vista
         $router->render('auth/crear',[
-            'titulo'=>'Crear tu Cuenta'
+            'titulo'=>'Crear tu Cuenta',
+            'errores'=>$errores,
+            'usuario'=>$usuario
         ]);
     }
 
-    public static function olvide(){
-        echo 'Desde olvide';
+    public static function olvide(Router $router){
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         }
+        $router->render('auth/olvide',[
+            'titulo'=>'Recupera tu contraseña'
+        ]);
     }
 
-    public static function reestablecer(){
-        echo 'Desde reestablecer';
+    public static function reestablecer(Router $router){
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         }
+
+        $router->render('auth/reestablecer',[
+            'titulo'=>'Reestablecer'
+        ]);
     }
 
-    public static function mensaje(){
-        echo 'Desde mensaje';
+    public static function mensaje(Router $router){
+        $router->render('auth/mensaje',[
+            'titulo'=>'Mensaje'
+        ]);
     }
 
-    public static function confirmar(){
-        echo 'Desde confirmar';
+    public static function confirmar(Router $router){
+        $router->render('auth/confirmar',[
+            'titulo'=>'Confirmación'
+        ]);
     }
 }
