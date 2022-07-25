@@ -44,6 +44,33 @@ class Usuario extends ActiveRecord {
         return self::$alertas;
     }
 
+    //Valida un email en la seccion de recuepar password
+    public function validarEmail(){
+        if (!$this->email){
+            self::$alertas['error'][] = 'El Email es Obligatorio';
+        }
+
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            self::$alertas['error'][] = 'Email Invalido';
+        }
+
+        return self::$alertas;
+    }
+
+    //Valida el password
+    public function validarPassword(){
+        if(!$this->password){
+            self::$alertas['error'][] = 'La Contraseña No Puede ir Vacio';
+        }
+
+        if(strlen($this->password) < 6){
+            self::$alertas['error'][] = 'La Contraseña debe contener al menos 6 caracteres';
+        }
+
+        return self::$alertas;
+    }
+
+
     public function hashPassword(){
         $this->password = password_hash($this->password,PASSWORD_BCRYPT);
     }
