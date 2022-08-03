@@ -31,6 +31,8 @@
     text-align: center;
     display: block;
     width: 100%;
+    border-radius: 0.4rem;
+
     @include tablet {
         width: auto;
     }
