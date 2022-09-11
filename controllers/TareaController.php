@@ -8,7 +8,28 @@ use MVC\Router;
 
 class TareaController{
     public static function index(){
+        //Queremos mostrar las tareas asignadas a un proyecto
 
+        //Obtenemos el id del proyecto con id de la url
+        $proyectoId = $_GET['id'];
+
+        //Si no existe el proyecto entonces lo devolvemos al dashboard
+        if(!$proyectoId) header('Location: /dashboard');
+
+        //Si no es el caso, buscamos el proyecto
+        $proyecto = Proyecto::where('url',$proyectoId);
+
+        //Iniciamos la sesion
+        session_start();
+
+        //Si no existe el proyecto o, si existe, pero no es del propietario entonces lo mandamos a 404
+        if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) header('Location: /404');
+
+        //De lo contrario, buscamos las tareas que pertenezcan al proyecto
+        $tareas = Tarea::belongsTo('proyectoId', $proyecto->id);
+
+        //Pasamos las tareas a formato JSON
+        echo json_encode(['tareas'=>$tareas]);
     }
 
     public static function crear(){
